@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aya Gandouzi — رسالة خاصة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose:  #c9727a;
+      --blush: #e8b4b8;
+      --cream: #fdf6f0;
+      --petal: #f5e6e8;
+      --mauve: #9b6b7a;
+      --deep:  #4a2535;
+      --gold:  #c8a96a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      font-family: 'Tajawal', sans-serif;
+      color: var(--deep);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .bg-layer {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .bg-layer::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(201,114,122,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 80%, rgba(155,107,122,.14) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(232,180,184,.10) 0%, transparent 70%);
+    }
+    .bg-layer::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle 1px at 50% 50%, rgba(201,114,122,.22) 1px, transparent 0);
+      background-size: 28px 28px;
+      opacity: .4;
+    }
+
+    .petal-wrap {
+      position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      border-radius: 50% 0 50% 0;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(-80px) rotate(0deg);   opacity: 0; }
+      10%  { opacity: .5; }
+      85%  { opacity: .35; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    .container {
+      position: relative; z-index: 2;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      text-align: center;
+      padding: 64px 0 40px;
+      animation: rise .9s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .avatar-ring {
+      width: 110px; height: 110px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blush), var(--rose), var(--mauve));
+      padding: 3px;
+      box-shadow: 0 8px 32px rgba(201,114,122,.35);
+      animation: pulse-ring 3s ease-in-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%,100% { box-shadow: 0 8px 32px rgba(201,114,122,.35); }
+      50%     { box-shadow: 0 12px 48px rgba(201,114,122,.6), 0 0 0 8px rgba(232,180,184,.15); }
+    }
+    .avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: var(--petal);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: var(--rose);
+      font-style: italic;
+    }
+
+    .site-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 7vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: .04em;
+      color: var(--deep);
+      line-height: 1.1;
+    }
+    .site-name span { color: var(--rose); font-style: italic; }
+
+    .tagline {
+      margin-top: 10px;
+      font-size: .95rem;
+      font-weight: 300;
+      color: var(--mauve);
+      letter-spacing: .12em;
+    }
+    .divider {
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blush), transparent);
+      margin: 22px auto 0;
+    }
+
+    .card {
+      width: 100%;
+      background: rgba(253,246,240,.88);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(232,180,184,.55);
+      border-radius: 28px;
+      padding: 36px 32px;
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.9) inset,
+        0 20px 60px rgba(155,107,122,.12),
+        0 4px 20px rgba(201,114,122,.08);
+      animation: rise .9s .2s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--mauve);
+      text-align: center;
+      margin-bottom: 22px;
+      letter-spacing: .06em;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      background: rgba(245,230,232,.45);
+      border: 1.5px solid rgba(232,180,184,.5);
+      border-radius: 18px;
+      padding: 18px 20px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      color: var(--deep);
+      resize: none;
+      outline: none;
+      transition: border-color .3s, box-shadow .3s, background .3s;
+      line-height: 1.75;
+      letter-spacing: .02em;
+    }
+    textarea::placeholder { color: rgba(155,107,122,.55); font-style: italic; }
+    textarea:focus {
+      border-color: var(--rose);
+      background: rgba(245,230,232,.7);
+      box-shadow: 0 0 0 4px rgba(201,114,122,.1);
+    }
+
+    .counter {
+      text-align: left;
+      font-size: .78rem;
+      color: var(--mauve);
+      opacity: .65;
+      margin-top: 8px;
+      font-weight: 300;
+      transition: color .3s;
+    }
+    .counter.warn { color: var(--rose); opacity: 1; }
+
+    .btn-send {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--rose) 0%, var(--mauve) 100%);
+      border: none;
+      border-radius: 50px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: #fff;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .3s, opacity .3s;
+      box-shadow: 0 6px 24px rgba(155,107,122,.35);
+    }
+    .btn-send::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.18) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .btn-send:hover:not(:disabled)  { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(155,107,122,.45); }
+    .btn-send:active:not(:disabled) { transform: translateY(0); }
+    .btn-send:disabled { opacity: .5; cursor: not-allowed; }
+
+    .btn-send .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,.35);
+      transform: scale(0);
+      animation: ripple .5s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .anon-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+      font-size: .82rem;
+      color: var(--mauve);
+      opacity: .75;
+      letter-spacing: .06em;
+    }
+    .anon-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+    .toast {
+      position: fixed;
+      bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--deep);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: .88rem;
+      letter-spacing: .06em;
+      opacity: 0;
+      transition: opacity .35s, transform .35s;
+      z-index: 100;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.err  { background: #7a3035; }
+
+    .success-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .success-overlay.show { display: flex; }
+    .form-content.hide { display: none; }
+
+    .success-ring {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blush), var(--rose));
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 28px rgba(201,114,122,.4);
+      animation: pop .5s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .success-ring svg { width: 36px; height: 36px; }
+
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--deep);
+    }
+    .success-sub {
+      font-size: .9rem;
+      color: var(--mauve);
+      font-weight: 300;
+      max-width: 260px;
+      line-height: 1.7;
+    }
+    .btn-again {
+      margin-top: 8px;
+      padding: 12px 32px;
+      background: transparent;
+      border: 1.5px solid var(--blush);
+      border-radius: 50px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: .9rem;
+      color: var(--mauve);
+      cursor: pointer;
+      transition: background .3s, color .3s;
+      letter-spacing: .08em;
+    }
+    .btn-again:hover { background: var(--petal); color: var(--rose); }
+
+    .hints {
+      width: 100%;
+      margin-top: 28px;
+      animation: rise .9s .4s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hints-label {
+      font-size: .78rem;
+      color: var(--mauve);
+      letter-spacing: .1em;
+      text-align: center;
+      opacity: .7;
+      margin-bottom: 12px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .chip {
+      padding: 8px 16px;
+      background: rgba(245,230,232,.7);
+      border: 1px solid rgba(232,180,184,.6);
+      border-radius: 50px;
+      font-size: .82rem;
+      color: var(--mauve);
+      cursor: pointer;
+      transition: background .25s, border-color .25s, color .25s, transform .2s;
+      font-family: 'Tajawal', sans-serif;
+      letter-spacing: .04em;
+    }
+    .chip:hover { background: var(--petal); border-color: var(--rose); color: var(--rose); transform: translateY(-2px); }
+
+    footer {
+      margin-top: 48px;
+      text-align: center;
+      font-size: .75rem;
+      color: var(--mauve);
+      opacity: .5;
+      letter-spacing: .1em;
+      animation: rise .9s .6s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 28px 20px; border-radius: 22px; }
+      .container { padding: 0 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="petal-wrap" id="petalWrap"></div>
+<div class="toast" id="toast"></div>
+
+<div class="container">
+
+  <header>
+    <div class="avatar-ring">
+      <div class="avatar-inner">A</div>
+    </div>
+    <h1 class="site-name">Aya <span>Gandouzi</span></h1>
+    <p class="tagline">رسائل سرية . بلا اسم</p>
+    <div class="divider"></div>
+  </header>
+
+  <div class="card" id="mainCard">
+    <div class="form-content" id="formContent">
+      <p class="card-title">اكتب لي ما تريد قوله...</p>
+
+      <textarea
+        id="msgBox"
+        maxlength="500"
+        placeholder="اكتب رسالتك هنا... سأقرأها وحدي"
+        oninput="updateCounter()"
+      ></textarea>
+      <div class="counter" id="counter">0 / 500</div>
+
+      <button class="btn-send" id="sendBtn" onclick="sendMessage(event)" disabled>
+        أرسل الرسالة
+      </button>
+
+      <div class="anon-note">
+        <div class="anon-dot"></div>
+        <span>هويتك مجهولة تماما</span>
+        <div class="anon-dot"></div>
+      </div>
+    </div>
+
+    <div class="success-overlay" id="successOverlay">
+      <div class="success-ring">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <p class="success-title">تم الارسال</p>
+      <p class="success-sub">رسالتك وصلت بنجاح وستقرأها آيا قريبا</p>
+      <button class="btn-again" onclick="resetForm()">ارسل رسالة اخرى</button>
+    </div>
+  </div>
+
+  <div class="hints" id="hints">
+    <p class="hints-label">-- اقتراحات --</p>
+    <div class="chips">
+      <div class="chip" onclick="insertHint(this)">أول مرة رأيتك فيها</div>
+      <div class="chip" onclick="insertHint(this)">شيء في عيونك</div>
+      <div class="chip" onclick="insertHint(this)">ابتسامتك تعني لي</div>
+      <div class="chip" onclick="insertHint(this)">ما يعجبني في شخصيتك</div>
+      <div class="chip" onclick="insertHint(this)">اعتراف صغير</div>
+      <div class="chip" onclick="insertHint(this)">لحظة لا تنسى معك</div>
+    </div>
+  </div>
+
+  <footer>made with love for aya &mdash; 2025</footer>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAq5d-3d2k5mKsby4FFbf69ipjW6E_v464",
+    authDomain: "data-e8677.firebaseapp.com",
+    projectId: "data-e8677",
+    storageBucket: "data-e8677.appspot.com",
+    messagingSenderId: "87123882518",
+    appId: "1:87123882518:web:987ac93244eb4860a53b37"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  /* =======================================================
+   *              قاعدة بيانات الهواتف وأصحابها
+   * ======================================================= */
+  const devicesDatabase = [
+    { modelCode: "SM-A057", phoneName: "Galaxy A05s", owner: "Nour" },
+    { modelCode: "X6525",   phoneName: "Infinix Smart 8", owner: "Senda" },
+    { modelCode: "A665L",   phoneName: "Itel A70", owner: "Maysa" },
+    { modelCode: "X6515",   phoneName: "Infinix Smart 7", owner: "Malek" }
+    // يمكنك إضافة المزيد من الأجهزة هنا حسب الحاجة
+  ];
+
+  /* =======================================================
+   *              دالة الكشف عن المرسل
+   * ======================================================= */
+  function detectSender() {
+    const userAgent = navigator.userAgent;
+    console.log("User-Agent:", userAgent); // للتتبع في الكونسول (F12)
+
+    // البحث في قاعدة البيانات عن كود موديل الهاتف الموجود في User Agent
+    for (let device of devicesDatabase) {
+      if (userAgent.includes(device.modelCode)) {
+        console.log(`تم التعرف على: ${device.owner} (${device.phoneName})`);
+        return device.owner; // إرجاع اسم المالك إذا تم العثور على تطابق
+      }
+    }
+
+    // إذا لم يتم العثور على تطابق، نعيد "صديق" كقيمة افتراضية
+    console.log("لم يتم التعرف على الجهاز، سيتم استخدام 'صديق'");
+    return "صديق";
+  }
+
+  /* ── petals ── */
+  const wrap = document.getElementById('petalWrap');
+  const colors = ['#e8b4b8', '#c9727a', '#f5e6e8', '#9b6b7a', '#c8a96a'];
+  const sizes = [8, 10, 13, 16, 9, 12, 7, 14];
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const s = sizes[i % sizes.length];
+    const wr = s * (.6 + Math.random() * .6);
+    p.style.cssText = `width:${s}px;height:${wr}px;left:${Math.random() * 100}%;background:${colors[i % colors.length]};animation-duration:${7 + Math.random() * 9}s;animation-delay:${-Math.random() * 14}s;filter:blur(${Math.random() * .8}px)`;
+    wrap.appendChild(p);
+  }
+
+  /* ── toast ── */
+  function showToast(msg, isErr = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.toggle('err', isErr);
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  /* ── counter ── */
+  window.updateCounter = () => {
+    const box = document.getElementById('msgBox');
+    const cnt = document.getElementById('counter');
+    const btn = document.getElementById('sendBtn');
+    cnt.textContent = `${box.value.length} / 500`;
+    cnt.classList.toggle('warn', box.value.length > 450);
+    btn.disabled = box.value.trim().length === 0;
+  };
+
+  /* ── hints ── */
+  window.insertHint = (el) => {
+    const box = document.getElementById('msgBox');
+    box.value = el.textContent + ' ';
+    box.focus();
+    window.updateCounter();
+  };
+
+  /* ── ripple ── */
+  function addRipple(btn, e) {
+    const r = document.createElement('span');
+    const rc = btn.getBoundingClientRect();
+    const sz = Math.max(rc.width, rc.height);
+    r.className = 'ripple';
+    r.style.cssText = `width:${sz}px;height:${sz}px;left:${e.clientX - rc.left - sz / 2}px;top:${e.clientY - rc.top - sz / 2}px`;
+    btn.appendChild(r);
+    setTimeout(() => r.remove(), 500);
+  }
+
+  /* ── send ── */
+  window.sendMessage = async (e) => {
+    const btn = document.getElementById('sendBtn');
+    const box = document.getElementById('msgBox');
+    const text = box.value.trim();
+    if (!text || btn.disabled) return;
+
+    addRipple(btn, e);
+    btn.disabled = true;
+    btn.innerHTML = 'جاري الارسال <span class="spinner"></span>';
+
+    // الكشف عن اسم المرسل
+    const senderName = detectSender();
+    // صياغة الرسالة بالشكل المطلوب: "الاسم : نص الرسالة"
+    const finalMessage = `${senderName} : ${text}`;
+
+    try {
+      await addDoc(collection(db, "secretMessages"), {
+        text: finalMessage, // حفظ الرسالة بالصيغة الجديدة
+        timestamp: serverTimestamp(),
+        read: false,
+        isBad: false
+      });
+      document.getElementById('formContent').classList.add('hide');
+      document.getElementById('hints').style.display = 'none';
+      document.getElementById('successOverlay').classList.add('show');
+    } catch (err) {
+      showToast('حدث خطأ، حاول مجددا', true);
+      btn.disabled = false;
+      btn.innerHTML = 'أرسل الرسالة'; // استخدام innerHTML لضمان إزالة spinner
+    }
+  };
+
+  /* ── reset ── */
+  window.resetForm = () => {
+    document.getElementById('msgBox').value = '';
+    document.getElementById('counter').textContent = '0 / 500';
+    const btn = document.getElementById('sendBtn');
+    btn.disabled = true;
+    btn.innerHTML = 'أرسل الرسالة'; // استخدام innerHTML
+    document.getElementById('successOverlay').classList.remove('show');
+    document.getElementById('formContent').classList.remove('hide');
+    document.getElementById('hints').style.display = '';
+  };
+
+  document.getElementById('msgBox').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.ctrlKey) {
+      const btn = document.getElementById('sendBtn');
+      if (!btn.disabled) btn.click();
+    }
+  });
+</script>
+</body>
+</html>
